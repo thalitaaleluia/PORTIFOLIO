@@ -1,0 +1,21 @@
+body {
+  background-color: #A56B3D;
+  margin: 0 ; 
+  padding: 50px; 
+  
+}
+
+.formacao{
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-size: 1.5em;
+  text-align: center;
+  align-items: center;
+  color: antiquewhite;
+}
+
+h1{
+  text-align: center;
+  color: antiquewhite;
+}

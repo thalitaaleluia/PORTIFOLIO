@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <style>
+      body {
+          background-color: #A56B3D;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          font-family: sans-serif;
+          color: #333;
+      }
+      
+      h1 {
+          color: #FFF;
+          margin-bottom: 20px;
+      }
+      
+      .contat ul {
+          list-style: none;
+          padding: 0;
+          margin: 0 0 25px 0;
+          display: flex;
+          gap: 10px;
+      }
+      
+      nav.contat ul li a {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          padding: 8px 12px;
+          background-color: #a5805f;
+          color: #FFF;
+          border-radius: 4px;
+          text-decoration: none;
+          font-weight: bold;
+      }
+      
+      nav.contat ul li a:hover {
+          background-color: #CD853F;
+      }
+      
+      .contat ul li a i {
+          font-size: 1.1em;
+          color: #FFF;
+      }
+      
+      .form-container {
+          background-color: #FFF;
+          padding: 20px;
+          border-radius: 6px;
+          width: 100%;
+          max-width: 380px;
+          box-sizing: border-box;
+          text-align: center;
+          margin: 15px;
+      }
+      
+      .form-container h2 {
+          color: #A56B3D;
+          margin-bottom: 15px;
+      }
+      
+      .contact-form {
+          width: 100%;
+      }
+      
+      .contact-form .form-group {
+          margin-bottom: 15px;
+          text-align: left;
+      }
+      
+      .contact-form label {
+          display: block;
+          margin-bottom: 5px;
+          color: #555;
+          font-weight: bold;
+      }
+      
+      .contact-form input[type="text"],
+      .contact-form input[type="email"],
+      .contact-form textarea {
+          width: 100%;
+          padding: 8px;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+          background-color: #fcfcfc;
+          color: #333;
+          font-size: 0.95em;
+          box-sizing: border-box;
+      }
+      
+      .contact-form textarea {
+          resize: vertical;
+          min-height: 80px;
+      }
+      
+      .contact-form input::placeholder,
+      .contact-form textarea::placeholder {
+          color: #aaa;
+      }
+      
+      .contact-form input:focus,
+      .contact-form textarea:focus {
+          border-color: #A56B3D;
+          outline: none;
+      }
+      
+      .contact-form button[type="submit"] {
+          background-color: #A56B3D;
+          color: white;
+          padding: 10px 18px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 1em;
+          font-weight: bold;
+          margin-top: 15px;
+      }
+      
+      .contact-form button[type="submit"]:hover {
+          background-color: #CD853F;
+      }
+      
+      .error-message {
+          color: #D32F2F;
+          font-size: 0.75em;
+          margin-top: 3px;
+          display: block;
+      }
+      
+      .success-message {
+          color: #388E3C;
+          font-weight: bold;
+          margin-top: 15px;
+          font-size: 0.9em;
+          text-align: center;
+      }
+      
+      footer {
+          margin-top: 25px;
+          color: rgba(255, 255, 255, 0.6);
+          font-size: 0.8em;
+      }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="form-container">
+            <h2>Fale Conosco!</h2>
+            <form id="contactForm" class="contact-form"> <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Seu nome completo">
+                    <span class="error-message" id="nomeError"></span> </div>
+                
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" placeholder="seu.email@exemplo.com">
+                    <span class="error-message" id="emailError"></span> </div>
+                
+                <div class="form-group">
+                    <label for="mensagem">Mensagem:</label>
+                    <textarea id="mensagem" name="mensagem" rows="6" placeholder="Escreva sua mensagem aqui..."></textarea>
+                    <span class="error-message" id="mensagemError"></span> </div>
+                
+                <button type="submit">Enviar Mensagem</button>
+                <p id="successMessage" class="success-message"></p> </form>
+        </section>
+    </main>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('contactForm');
+        const nomeInput = document.getElementById('nome');
+        const emailInput = document.getElementById('email');
+        const mensagemInput = document.getElementById('mensagem');
+    
+        const nomeError = document.getElementById('nomeError');
+        const emailError = document.getElementById('emailError');
+        const mensagemError = document.getElementById('mensagemError');
+        const successMessage = document.getElementById('successMessage');
+    
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+    
+            clearMessages();
+    
+            let isValid = true;
+    
+            if (nomeInput.value.trim() === '') {
+                nomeError.textContent = 'Por favor, preencha seu nome.';
+                isValid = false;
+            }
+    
+            if (emailInput.value.trim() === '') {
+                emailError.textContent = 'Por favor, preencha seu e-mail.';
+                isValid = false;
+            } else if (!isValidEmail(emailInput.value.trim())) {
+                emailError.textContent = 'Por favor, insira um e-mail válido.';
+                isValid = false;
+            }
+    
+            if (mensagemInput.value.trim() === '') {
+                mensagemError.textContent = 'Por favor, escreva sua mensagem.';
+                isValid = false;
+            }
+    
+            if (isValid) {
+                console.log('Formulário enviado com sucesso!');
+                console.log('Nome:', nomeInput.value.trim());
+                console.log('E-mail:', emailInput.value.trim());
+                console.log('Mensagem:', mensagemInput.value.trim());
+    
+                successMessage.textContent = 'Mensagem enviada com sucesso! Em breve entraremos em contato.';
+                form.reset();
+            }
+        });
+    
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(String(email).toLowerCase());
+        }
+    
+        function clearMessages() {
+            nomeError.textContent = '';
+            emailError.textContent = '';
+            mensagemError.textContent = '';
+            successMessage.textContent = '';
+        }
+    });
+    </script>
+
+</body>
+</html>
